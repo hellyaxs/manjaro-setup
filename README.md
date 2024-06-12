@@ -1,4 +1,4 @@
-# 🔗 manjaro-setup
+# 🔗 My setup scripts for Linux Manjaro
 
 
 <img src="https://raw.githubusercontent.com/MicaelliMedeiros/micaellimedeiros/master/image/computer-illustration.png" alt="ilustração de um computador" min-width="400px" max-width="400px" width="400px" align="right">
@@ -6,12 +6,6 @@
 <p align="left"> 
   Não gosto de gastar muito tempo instalando e configurando meu sistema de trabalho, mas prefiro acelerar o tempo para usá-lo de forma produtiva. Daí esses scripts que me ajudam a colocar em funcionamento um novo sistema o mais rápido possível.
 </p>
-
-<p align="left">
-  🦄 Linguagens: <strong> script shell </strong>
-</p>
-
-
 
 <p align="left">
   <a href="#" title="Gmail">
@@ -25,7 +19,7 @@
 </p>
 
 <p align="left">
-My setup scripts for Linux Manjaro
+
 
 Dê uma olhada em `manjaro_install_apps.sh`, `manjaro_install_cli.sh` e `manjaro_install_web_dev.sh`. Antes de executar qualquer um deles, recomendo que você os abra em um editor de texto e revise o que será instalado, comente/descomente dependendo de suas necessidades, então `chmod +x *.sh` e execute.
 </p>

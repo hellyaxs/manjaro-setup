@@ -37,6 +37,8 @@ $_i_ aria2 # Like axel, only supports more protocols
 $_i_ jq # JSON
 $_i_ htmlq # like jq, but for html
 $_i_ htop
+$_i_ nvtop
+$_i_ tmux
 $_i_ i7z # CPU Info
 $_i_ procs # aka ps
 $_i_ debtap # Convert .deb package for Arch
@@ -89,12 +91,13 @@ $_i_ brotli
 $_i_ pigz # parallel gzip
 
 # Disk
-# $_i_ ncdu # like `du`
+$_i_ ncdu # like `du`
 $_i_ borg # backup + compression + dedup
 $_i_ borgmatic
 $_i_ jdupes # jdupes -B -S -r /btrfs/mount/point
 $_i_ duperemove # duperemove -dhr --hashfile=/var/cache/hdd.duphash /btrfs/mount/point
 $_i_ compsize
+$_i_ testdisk
 
 $_i_ exa # aka ls
 
