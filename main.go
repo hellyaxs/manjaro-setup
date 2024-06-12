@@ -9,6 +9,28 @@ import (
     "github.com/spf13/cobra"
 )
 
+func execScripts(scriptPath string) {
+       
+    // Verifica se o script existe
+    if _, err := os.Stat(scriptPath); os.IsNotExist(err) {
+        fmt.Printf("O script %s não existe.\n", scriptPath)
+        return
+    }
+
+    // Executa o script
+    cmd := exec.Command("bash", scriptPath)
+    cmd.Stdout = os.Stdout
+    cmd.Stderr = os.Stderr
+    if err := cmd.Run(); err != nil {
+        fmt.Printf("Erro ao executar o script: %v\n", err)
+        return
+    }
+
+    fmt.Println("Script executado com sucesso.")
+}
+
+
+
 func main() {
     reader := bufio.NewReader(os.Stdin)
     var rootCmd = &cobra.Command{
@@ -28,25 +50,7 @@ func main() {
             fmt.Println("\n")
         },
     }
-    func execScripts(scriptPath string) {
-       
-        // Verifica se o script existe
-        if _, err := os.Stat(scriptPath); os.IsNotExist(err) {
-            fmt.Printf("O script %s não existe.\n", scriptPath)
-            return
-        }
 
-        // Executa o script
-        cmd := exec.Command("bash", scriptPath)
-        cmd.Stdout = os.Stdout
-        cmd.Stderr = os.Stderr
-        if err := cmd.Run(); err != nil {
-            fmt.Printf("Erro ao executar o script: %v\n", err)
-            return
-        }
-
-        fmt.Println("Script executado com sucesso.")
-    }
 
     rootCmd.Execute()
     for {
