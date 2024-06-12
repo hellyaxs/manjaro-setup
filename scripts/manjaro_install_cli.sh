@@ -80,10 +80,12 @@ $_i_ wrk
 # a C library and a set of command-line programs providing a simple interface to inotify.
 $_i_ inotify-tools
 
-# # Sensors
-# $_i_ lm_sensors
-# $_i_ psensor
-# $_i_ hddtemp
+# conatainer runtime
+$_i_ docker
+$_i_ docker-compose
+
+# Don't ask for sudo when running docker commands
+sudo usermod -a -G docker "$(whoami)"
 
 # Archivers
 $_i_ zip
@@ -100,13 +102,11 @@ $_i_ compsize
 $_i_ testdisk
 
 $_i_ exa # aka ls
-
 $_i_ broot # Fuzzy Search + tree + cd
-
 $_i_ sox # CLI audio player
 
 # For fun
-$_i_ fortune-mod
-$_i_ cowsay
+$_i_ hollywood # Matrix screensaver
+$_i_ neofetch # System info
 $_i_ espeak # Text-2-Speach synthesizer
-# $_i_ aview # Image to ASCII converter
+$_i_ aview # Image to ASCII converter

@@ -4,6 +4,7 @@ import (
     "bufio"
     "fmt"
     "os"
+    "os/exec"
     "strings"
     "github.com/spf13/cobra"
 )
@@ -16,14 +17,45 @@ func main() {
         Long:  `A longer description that spans multiple lines and likely contains examples and usage of using your application.`,
         Run: func(cmd *cobra.Command, args []string) {
             // Default action when no subcommands are passed
-            fmt.Println("tesndaod cobrea model")
+        text :=`
+        ███╗░░░███╗░█████╗░███╗░░██╗░░░░░██╗░█████╗░█ ████╗░░█████╗░  ░██████╗███████╗████████╗██╗░░░██╗██████╗░
+        ████╗░████║██╔══██╗████╗░██║░░░░░██║██╔══██╗██╔══██╗██╔══██╗  ██╔════╝██╔════╝╚══██╔══╝██║░░░██║██╔══██╗
+        ██╔████╔██║███████║██╔██╗██║░░░░░██║███████║██████╔╝██║░░██║  ╚█████╗░█████╗░░░░░██║░░░██║░░░██║██████╔╝
+        ██║╚██╔╝██║██╔══██║██║╚████║██╗░░██║██╔══██║██╔══██╗██║░░██║  ░╚═══██╗██╔══╝░░░░░██║░░░██║░░░██║██╔═══╝░
+        ██║░╚═╝░██║██║░░██║██║░╚███║╚█████╔╝██║░░██║██║░░██║╚█████╔╝  ██████╔╝███████╗░░░██║░░░╚██████╔╝██║░░░░░
+        ╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░  ╚═════╝░╚══════╝░░░╚═╝░░░░╚═════╝░╚═╝░░░░░`
+            fmt.Println(text)
+            fmt.Println("\n")
         },
     }
+    func execScripts(scriptPath string) {
+       
+        // Verifica se o script existe
+        if _, err := os.Stat(scriptPath); os.IsNotExist(err) {
+            fmt.Printf("O script %s não existe.\n", scriptPath)
+            return
+        }
 
+        // Executa o script
+        cmd := exec.Command("bash", scriptPath)
+        cmd.Stdout = os.Stdout
+        cmd.Stderr = os.Stderr
+        if err := cmd.Run(); err != nil {
+            fmt.Printf("Erro ao executar o script: %v\n", err)
+            return
+        }
 
+        fmt.Println("Script executado com sucesso.")
+    }
+
+    rootCmd.Execute()
     for {
-        rootCmd.Execute()
+        
         fmt.Println("Please enter a command (type 'exit' to quit):")
+        fmt.Print("Selecione o tipo de instalação que deseja:\n")
+        fmt.Print("1. instalação padrão (manjaro install apps)\n")
+        fmt.Print("2. instalação cli (manjaro install cli)\n")
+        fmt.Print("3. instalação web/dev (manjaro install web)\n")
         fmt.Print("> ")
         input, _ := reader.ReadString('\n')
         input = strings.TrimSpace(input)
@@ -46,6 +78,18 @@ func main() {
             }
         case "help":
             fmt.Println("Available commands: hello, confirm, help, exit")
+        case "1":
+            fmt.Println("preparando setup para [instalação de apps]...")
+             execScripts("./scripts/manjaro_install_apps.sh")
+             return
+        case "2":
+            fmt.Println("preparando setup para [instalação de cli]...")
+            execScripts("./scripts/manjaro_install_cli.sh")
+            return
+        case "3":
+            fmt.Println("preparando setup para [instalação de web/dev]...")
+            execScripts("./scripts/manjaro_install_web_dev.sh")
+            return
         default:
             fmt.Println("Unknown command. Type 'help' to see available commands.")
         }
