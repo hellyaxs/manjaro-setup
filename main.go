@@ -7,6 +7,7 @@ import (
     "os/exec"
     "strings"
     "github.com/spf13/cobra"
+    "setup/cli"
 )
 
 func execScripts(scriptPath string) {
@@ -48,6 +49,7 @@ func main() {
         ╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░  ╚═════╝░╚══════╝░░░╚═╝░░░░╚═════╝░╚═╝░░░░░`
             fmt.Println(text)
             fmt.Println("\n")
+            cli.StartViews()
         },
     }
 
@@ -84,15 +86,15 @@ func main() {
             fmt.Println("Available commands: hello, confirm, help, exit")
         case "1":
             fmt.Println("preparando setup para [instalação de apps]...")
-             execScripts("./scripts/manjaro_install_apps.sh")
+            //  execScripts("./scripts/manjaro_install_apps.sh")
              return
         case "2":
             fmt.Println("preparando setup para [instalação de cli]...")
-            execScripts("./scripts/manjaro_install_cli.sh")
+            // execScripts("./scripts/manjaro_install_cli.sh")
             return
         case "3":
             fmt.Println("preparando setup para [instalação de web/dev]...")
-            execScripts("./scripts/manjaro_install_web_dev.sh")
+            // execScripts("./scripts/manjaro_install_web_dev.sh")
             return
         default:
             fmt.Println("Unknown command. Type 'help' to see available commands.")
