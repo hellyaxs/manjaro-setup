@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/fogleman/ease"
@@ -18,6 +17,7 @@ const (
 	progressFullChar  = "█"
 	progressEmptyChar = "░"
 	dotChar           = " • "
+	
 )
 
 // General stuff for styling the view
@@ -29,7 +29,9 @@ var (
 	progressEmpty = subtleStyle.Render(progressEmptyChar)
 	dotStyle      = lipgloss.NewStyle().Foreground(lipgloss.Color("236")).Render(dotChar)
 	mainStyle     = lipgloss.NewStyle().MarginLeft(2)
-
+    locationScripts   = [...]string{"../scripts/manjaro_install_web_dev.sh",
+	                               "../scripts/manjaro_install_cli.sh",
+								   "../scripts/manjaro_install_apps.sh","no file"} 
 	// Gradient colors we'll use for the progress bar
 	ramp = makeRampStyles("#B14FFF", "#00FFA3", progressBarWidth)
 )
@@ -96,13 +98,14 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	var s string
 	if m.Quitting {
-		return "\n  See you later!\n\n"
+		return "\n  Instalação concluida até a proxima!\n\n"
 	}
 	if !m.Chosen {
 		s = choicesView(m)
 	} else {
-		s = chosenView(m)
+		s = chosenView(m)	
 	}
+	
 	return mainStyle.Render("\n" + s + "\n\n")
 }
 
@@ -127,14 +130,6 @@ func updateChoices(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 			m.Chosen = true
 			return m, frame()
 		}
-
-	case tickMsg:
-		if m.Ticks == 0 {
-			m.Quitting = true
-			return m, tea.Quit
-		}
-		m.Ticks--
-		return m, tick()
 	}
 
 	return m, nil
@@ -178,8 +173,8 @@ func choicesView(m model) string {
 
 	tpl := "Qual setup você deseja ?\n\n"
 	tpl += "%s\n\n"
-	tpl += "Program quits in %s seconds\n\n"
-	tpl += subtleStyle.Render("j/k, up/down: select") + dotStyle +
+	tpl += ""
+	tpl += subtleStyle.Render("UpArrow/DownArrow, up/down: select") + dotStyle +
 		subtleStyle.Render("enter: choose") + dotStyle +
 		subtleStyle.Render("q, esc: quit")
 
@@ -191,7 +186,7 @@ func choicesView(m model) string {
 		checkbox("4. instalação servidor (no working)", c == 3),
 	)
 
-	return fmt.Sprintf(tpl, choices, ticksStyle.Render(strconv.Itoa(m.Ticks)))
+	return fmt.Sprintf(tpl, choices)
 }
 
 // The second view, after a task has been chosen
@@ -200,18 +195,19 @@ func chosenView(m model) string {
 
 	switch m.Choice {
 	case 0:
-		msg = fmt.Sprintf("1. instalação padrão (manjaro install apps)?\n\nCool, we'll need %s and %s...", keywordStyle.Render("libgarden"), keywordStyle.Render("vegeutils"))
+		msg = fmt.Sprintf("preparando setup para [instalação de apps]?\n\nCool, we'll need %s and %s...", keywordStyle.Render("libgarden"), keywordStyle.Render("vegeutils"))
 	case 1:
-		msg = fmt.Sprintf("A trip to the market?\n\nOkay, then we should install %s and %s...", keywordStyle.Render("marketkit"), keywordStyle.Render("libshopping"))
+		msg = fmt.Sprintf("preparando setup para [instalação de cli]?\n\nOkay, then we should install %s and %s...", keywordStyle.Render("marketkit"), keywordStyle.Render("libshopping"))
 	case 2:
-		msg = fmt.Sprintf("Reading time?\n\nOkay, cool, then we’ll need a library. Yes, an %s.", keywordStyle.Render("actual library"))
+		msg = fmt.Sprintf("preparando setup para [instalação de web/dev]?\n\nOkay, cool, then we’ll need a library. Yes, an %s.", keywordStyle.Render("actual library"))
 	default:
 		msg = fmt.Sprintf("It’s always good to see friends.\n\nFetching %s and %s...", keywordStyle.Render("social-skills"), keywordStyle.Render("conversationutils"))
 	}
 
-	label := "Downloading..."
+	label := "preparando scripts..."
 	if m.Loaded {
 		label = fmt.Sprintf("Downloaded. Exiting in %s seconds...", ticksStyle.Render(strconv.Itoa(m.Ticks)))
+		ExecScripts(locationScripts[m.Choice])
 	}
 
 	return msg + "\n\n" + label + "\n" + progressbar(m.Progress) + "%"
