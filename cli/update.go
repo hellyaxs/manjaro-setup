@@ -4,6 +4,7 @@ import (
 	"time"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/fogleman/ease"
+	"slices"
 )
 
 func tick() tea.Cmd {
@@ -31,8 +32,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	}
 	if !m.Chosen {
 		return updateChoices(msg, m)
+	}else{
+		switch m.Choice {
+		    case 0:
+				m.options = options
+		}
+		return updateChosen(msg, m)
 	}
-	return updateChosen(msg, m)
 }
 
 
@@ -52,6 +58,12 @@ func updateChoices(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 			m.Choice--
 			if m.Choice < 0 {
 				m.Choice = len(m.options)-1
+			}
+		case " ":
+			if slices.Contains(m.SelectedChoices, m.Choice) {
+				m.SelectedChoices = remove(m.SelectedChoices,m.Choice)
+			} else {
+				m.SelectedChoices = append(m.SelectedChoices, m.Choice)
 			}
 		case "enter":
 			m.Chosen = true
@@ -81,8 +93,10 @@ func updateChosen(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 	case tickMsg:
 		if m.Loaded {
 			if m.Ticks == 0 {
-				m.Quitting = true
-				return m, tea.Quit
+				// m.Quitting = true
+				m.Chosen = false
+				m.Loaded = false
+				return m, frame()
 			}
 			m.Ticks--
 			return m, tick()
@@ -93,3 +107,7 @@ func updateChosen(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 }
 
 
+func remove(slice []int, i int) []int {
+	copy(slice[i:], slice[i+1:])
+	return slice[:len(slice)-1]
+  }

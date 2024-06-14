@@ -1,9 +1,11 @@
 package cli
 
 import (
-	"github.com/charmbracelet/lipgloss"
 	"setup/cli/utils"
-    tea "github.com/charmbracelet/bubbletea"
+
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+	
 )
 
 const (
@@ -18,6 +20,7 @@ var (
     subtleStyle   = lipgloss.NewStyle().Foreground(lipgloss.Color("241"))
     ticksStyle    = lipgloss.NewStyle().Foreground(lipgloss.Color("79"))
     checkboxStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("212"))
+    checkboxStyleSelected = lipgloss.NewStyle().Foreground(lipgloss.Color("12"))
     progressEmpty = subtleStyle.Render(progressEmptyChar)
     dotStyle      = lipgloss.NewStyle().Foreground(lipgloss.Color("236")).Render(dotChar)
     mainStyle     = lipgloss.NewStyle().MarginLeft(2)
@@ -37,17 +40,22 @@ type (
 
 type model struct {
     Choice          int
-    SelectedChoices map[int]bool
+    SelectedChoices []int
 	Chosen          bool
     Ticks           int
     Frames          int
     Progress        float64
     Loaded          bool
     Quitting        bool
-	options	  []string
+	options	        []string
 }
 
 func (m model) Init() tea.Cmd {
     return tick()
+}
+
+type viewState struct {
+    choices []string
+    options []string
 }
 

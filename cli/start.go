@@ -37,7 +37,7 @@ var (
 
 func StartViews() {
     initialModel := model{ Choice: 0, 
-		SelectedChoices: make(map[int]bool),
+		SelectedChoices: []int{},
 		Ticks: 10, 
 		Frames: 0, 
 		Progress: 0, 
