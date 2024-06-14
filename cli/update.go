@@ -61,7 +61,7 @@ func updateChoices(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 			}
 		case " ":
 			if slices.Contains(m.SelectedChoices, m.Choice) {
-				m.SelectedChoices = remove(m.SelectedChoices,m.Choice)
+				m.SelectedChoices = removeElement(m.SelectedChoices,m.Choice)
 			} else {
 				m.SelectedChoices = append(m.SelectedChoices, m.Choice)
 			}
@@ -107,7 +107,18 @@ func updateChosen(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 }
 
 
-func remove(slice []int, i int) []int {
-	copy(slice[i:], slice[i+1:])
-	return slice[:len(slice)-1]
-  }
+
+  func removeElement(slice []int, element int) []int {
+    index := -1
+    for i, v := range slice {
+        if v == element {
+            index = i
+            break
+        }
+    }
+    if index == -1 {
+        // Elemento não encontrado, retornar a lista original
+        return slice
+    }
+    return append(slice[:index], slice[index+1:]...)
+}
