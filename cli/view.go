@@ -68,8 +68,9 @@ func ChoicesViewSetupWeb(m model) string {
 }
 
 
-func ChoicesViewSetupCliDe(m model, options []string) string {
+func ChoicesViewSetupCliDe(m model) string {
     
+	c := m.Choice
     tpl := "Qual setup você deseja ?\n\n"
     tpl += "%s\n\n"
     tpl += ""
@@ -80,9 +81,8 @@ func ChoicesViewSetupCliDe(m model, options []string) string {
 
     var choicesBuilder strings.Builder
 
-    for i, option := range options {
-        selected := m.SelectedChoices[i]
-        choicesBuilder.WriteString(checkbox(option, selected))
+    for i, option := range m.options {
+        choicesBuilder.WriteString(checkbox(option, c == i))
         if i < len(options)-1 {
             choicesBuilder.WriteString("\n")
         }

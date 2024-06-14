@@ -44,6 +44,7 @@ type model struct {
     Progress        float64
     Loaded          bool
     Quitting        bool
+	options	  []string
 }
 
 func (m model) Init() tea.Cmd {
