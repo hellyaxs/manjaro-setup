@@ -49,18 +49,20 @@ func StartViews() {
     if _, err := p.Run(); err != nil {
         fmt.Println("could not start program:", err)
     }
+	fmt.Print("printando valor depos da execuçaõ :::",initialModel)
+	
 
-	initialModel2 := model{ Choice: 0, 
-		SelectedChoices: make(map[int]bool),
-		Ticks: 10, 
-		Frames: 0, 
-		Progress: 0, 
-		Loaded: false, 
-		Quitting: false,
-		options:options,
-		}
-    q := tea.NewProgram(initialModel2)
-    if _, err := q.Run(); err != nil {
-        fmt.Println("could not start program:", err)
-    }
+	// initialModel2 := model{ Choice: 0, 
+	// 	SelectedChoices: make(map[int]bool),
+	// 	Ticks: 10, 
+	// 	Frames: 0, 
+	// 	Progress: 0, 
+	// 	Loaded: false, 
+	// 	Quitting: false,
+	// 	options:options,
+	// 	}
+    // q := tea.NewProgram(initialModel2)
+    // if _, err := q.Run(); err != nil {
+    //     fmt.Println("could not start program:", err)
+    // }
 }
