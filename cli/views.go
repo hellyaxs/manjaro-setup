@@ -39,7 +39,7 @@ func choicesView(m model) string {
     var choicesBuilder strings.Builder
 
     for i, option := range m.options {
-        choicesBuilder.WriteString(checkbox(option, slices.Contains(m.SelectedChoices, i) || c == i))
+        choicesBuilder.WriteString(checkbox(option,  slices.Contains(m.SelectedChoices, i) ,slices.Contains(m.SelectedChoices, i) || c == i))
         if i < len(options)-1 {
             choicesBuilder.WriteString("\n")
         }
@@ -74,10 +74,14 @@ func chosenView(m model) string {
 	return msg + "\n\n" + label + "\n" + progressbar(m.Progress) + "%"
 }
 
-func checkbox(label string, checked bool) string {
+func checkbox(label string,isSelected bool, checked bool) string {
 	if checked {
-		return checkboxStyleSelected.Render("[x] " + label)
+		if isSelected {
+			return checkboxStyleSelected.Render("[x] " + label)
+		}
+		return checkboxStyle.Render("[x] " + label)
 	}
+	
 	return fmt.Sprintf("[ ] %s", label)
 }
 
