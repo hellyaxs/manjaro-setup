@@ -5,7 +5,6 @@ import (
 	"math"
 	"strconv"
 	"strings"
-
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -56,7 +55,7 @@ func chosenView(m model) string {
 
 	switch m.Choice {
 	case 0:
-		msg = fmt.Sprintf("preparando setup para [instalação de apps]?\n\nCool, we'll need %s and %s...", keywordStyle.Render("libgarden"), keywordStyle.Render("vegeutils"))
+		msg = fmt.Sprintf("preparando setup para [instalação de apps]?\n\nOkay, carregando arquivo %s e %s...", keywordStyle.Render("integrando lista"), keywordStyle.Render("pacotes"))
 	case 1:
 		msg = fmt.Sprintf("preparando setup para [instalação de cli]?\n\nOkay, then we should install %s and %s...", keywordStyle.Render("marketkit"), keywordStyle.Render("libshopping"))
 	case 2:
@@ -96,7 +95,6 @@ func chosenView(m model) string {
 		if _, err := q.Run(); err != nil {
 			fmt.Println("could not start program:", err)
 		}
-		
 	}
 	}
 

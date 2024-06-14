@@ -22,9 +22,9 @@ var (
     dotStyle      = lipgloss.NewStyle().Foreground(lipgloss.Color("236")).Render(dotChar)
     mainStyle     = lipgloss.NewStyle().MarginLeft(2)
     locationScripts = [...]string{
-        "../scripts/manjaro_install_web_dev.sh",
-        "../scripts/manjaro_install_cli.sh",
-        "../scripts/manjaro_install_apps.sh",
+        "../../scripts/manjaro_install_web_dev.sh",
+        "../../scripts/manjaro_install_cli.sh",
+        "../../scripts/manjaro_install_apps.sh",
         "no file",
     }
     ramp = utils.MakeRampStyles("#B14FFF", "#00FFA3", progressBarWidth)
