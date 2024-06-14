@@ -5,9 +5,9 @@ import (
 	"math"
 	"strconv"
 	"strings"
+
+	tea "github.com/charmbracelet/bubbletea"
 )
-
-
 
 // The main view, which just calls the appropriate sub-view
 func (m model) View() string {
@@ -68,7 +68,36 @@ func chosenView(m model) string {
 	label := "preparando scripts..."
 	if m.Loaded {
 		label = fmt.Sprintf("Downloaded. Exiting in %s seconds...", ticksStyle.Render(strconv.Itoa(m.Ticks)))
-		ExecScripts(locationScripts[m.Choice])
+		if m.Choice == 0 {
+		initialModel2 := model{ Choice: 0, 
+			SelectedChoices: make(map[int]bool),
+			Ticks: 10, 
+			Frames: 0, 
+			Progress: 0, 
+			Loaded: false, 
+			Quitting: false,
+			options:options,
+			}
+		q := tea.NewProgram(initialModel2)
+		if _, err := q.Run(); err != nil {
+			fmt.Println("could not start program:", err)
+		}
+	} else  {
+		initialModel2 := model{ Choice: 0, 
+			SelectedChoices: make(map[int]bool),
+			Ticks: 10, 
+			Frames: 0, 
+			Progress: 0, 
+			Loaded: false, 
+			Quitting: false,
+		    options:[]string{"tesand","testand2","testand3"},
+			}
+		q := tea.NewProgram(initialModel2)
+		if _, err := q.Run(); err != nil {
+			fmt.Println("could not start program:", err)
+		}
+		
+	}
 	}
 
 	return msg + "\n\n" + label + "\n" + progressbar(m.Progress) + "%"
