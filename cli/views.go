@@ -76,7 +76,7 @@ func chosenView(m model) string {
 
 func checkbox(label string, checked bool) string {
 	if checked {
-		return checkboxStyle.Render("[x] " + label)
+		return checkboxStyleSelected.Render("[x] " + label)
 	}
 	return fmt.Sprintf("[ ] %s", label)
 }
