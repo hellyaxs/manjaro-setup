@@ -35,107 +35,129 @@
     Dê uma olhada em `manjaro_install_apps.sh` , `manjaro_install_cli.sh` e `manjaro_install_web_dev.sh`. Antes de executar qualquer um deles, recomendo que você os abra em um editor de texto e revise o que será instalado, comente/descomente dependendo de suas necessidades, então `chmod +x *.sh` e execute.
 </p>
 
+###  🔧 Gerar o binário
+Siga os passos abaixo para compilar o projeto e gerar o executável:
 
-### Como usar
+1. Instale o Go
+Certifique-se de que você tem o Go instalado. Você pode verificar com:
 
+``` bash
+go version
 ```
-sudo bash setup
+
+Se não tiver, instale a partir de: https://golang.org/dl/
+
+2. Compile o projeto
+No terminal, vá até o diretório raiz do projeto e execute:
+
+``` bash
+go build -o manjaro-setup ./cmd/main.go
 ```
 
+Isso irá gerar um binário chamado nome-do-binario na raiz do projeto.
 
-### Lista de packages
+3. (Opcional) Compilar para outros sistemas
+Para gerar o binário para outro sistema operacional ou arquitetura:
 
-##### Pacman list
-* atom
-* base-devel
-* cmake
-* ctags
-* dbeaver
-* docker
-* erlang-dependencies
-* fish
-* flatpak *(disabled)*
-* mono *(disabled)*
-* ncurses
-* neovim *(disabled)*
-* notepadqq
-* opera
-* pamac
-* plank
-* postgresql *(disabled)*
-* qbittorrent
-* redis *(disabled)*
-* snap
-* steam
-* sublime-text
-* telegram-desktop
-* tig
-* tmux
-* visual-studio-code
-* wine *(disabled)*
-* xclip
-* yay
-* zsh *(disabled)*
+``` bash
+GOOS=linux GOARCH=amd64 go build -o manjaro-setup ./cmd/main.go
+GOOS=windows GOARCH=amd64 go build -o manjaro-setup ./cmd/main.go
+GOOS=darwin GOARCH=amd64 go build -o manjaro-setup ./cmd/main.go
+```
 
-##### Pamac list
-* slack
-* virtual-box
-* whatsapp
+4.Execute o binário
+No terminal:
 
-##### yay list
-* chrome
-* heroku-cli
-* slack-desktop
-* spotify
-* teamviewer
-* visual-studio-code *(disabled)*
-* whatsapp
-* zoom
+```bash
+./manjaro-setup
+```
 
-##### Flatpak list (optional)
-* atom
-* dbeaver
-* franz
-* postman
-* spotify
-* visual studio code
-* zoom
+```shell
+manjaro-setup.exe
+```
 
-##### Snap list (optional)
-* whatsdesk
-* slack
+# Pacman Packages
 
-##### Environment setup list
-* asdf
-* docker 
-* elixir  *(disabled)*
-* erlang  *(disabled)*
-* fish
-* git
-* neovim *(disabled)*
-* postgres *(disabled)*
-* ruby  *(disabled)*
-* swappiness 
-* teamviewer  *(disabled)*
-* tmux
-* zsh *(disabled)*
+| Pacote               | Descrição                                          | Status     |
+|----------------------|----------------------------------------------------|------------|
+| atom                 | Editor de texto hackable e open source            | Ativo      |
+| base-devel           | Pacotes básicos para compilação (make, gcc, etc.) | Ativo      |
+| cmake                | Ferramenta de automação para build de projetos    | Ativo      |
+| ctags                | Gera índices de tags para navegação de código     | Ativo      |
+| dbeaver              | Cliente de banco de dados universal               | Ativo      |
+| docker               | Plataforma para containers                        | Ativo      |
+| erlang-dependencies  | Dependências para projetos Erlang/Elixir          | Ativo      |
+| fish                 | Shell amigável e interativo                       | Ativo      |
+| flatpak              | Sistema de empacotamento universal para Linux     | Desabilitado |
+| mono                 | Plataforma .NET open source                       | Desabilitado |
+| ncurses              | Biblioteca para interfaces TUI (text-based)       | Ativo      |
+| neovim               | Editor de texto moderno baseado no Vim            | Desabilitado |
+| notepadqq            | Editor de texto similar ao Notepad++ para Linux   | Ativo      |
+| opera                | Navegador web rápido e leve                       | Ativo      |
+| pamac                | Frontend gráfico para pacman                      | Ativo      |
+| plank                | Dock leve para ambiente gráfico                   | Ativo      |
+| postgresql           | Sistema gerenciador de banco de dados relacional  | Desabilitado |
+| qbittorrent          | Cliente de torrents com interface Qt              | Ativo      |
+| redis                | Banco de dados chave-valor em memória             | Desabilitado |
+| snap                 | Sistema de pacotes da Canonical                   | Ativo      |
+| steam                | Plataforma de jogos                               | Ativo      |
+| sublime-text         | Editor de texto popular entre desenvolvedores     | Ativo      |
+| telegram-desktop     | Aplicativo de desktop para o Telegram             | Ativo      |
+| tig                  | Visualizador de repositórios Git no terminal      | Ativo      |
+| tmux                 | Multiplexador de terminal                         | Ativo      |
+| visual-studio-code   | Editor de código da Microsoft                     | Ativo      |
+| wine                 | Executa aplicativos Windows no Linux              | Desabilitado |
+| xclip                | Acesso ao clipboard via terminal                  | Ativo      |
+| yay                  | AUR Helper para pacman                            | Ativo      |
+| zsh                  | Shell poderoso e customizável                     | Desabilitado |
 
-##### Attention! Run fish setup manualy first
+# Pamac Packages
 
-* asdf
-* docker
-* elixir *(disabled)*
-* erlang *(disabled)*
-* fish
-* git
-* neovim *(disabled)*
-* postgres *(disabled)*
-* ruby
-* teamviewer
-* tmux
-* zsh *(disabled)*
+| Pacote        | Descrição                                  |
+|---------------|--------------------------------------------|
+| slack         | Cliente oficial do Slack                  |
+| virtual-box   | Virtualização de sistemas operacionais    |
+| whatsapp      | Cliente de WhatsApp para desktop          |
 
-##### Extra list (optional)
-* Planksettings
-* Remmina(remote desktop)
+# Yay (AUR) Packages
 
+| Pacote               | Descrição                                  | Status     |
+|----------------------|--------------------------------------------|------------|
+| chrome               | Navegador web do Google                   | Ativo      |
+| heroku-cli           | CLI da plataforma Heroku                  | Ativo      |
+| slack-desktop        | Cliente desktop alternativo do Slack      | Ativo      |
+| spotify              | Serviço de streaming de música            | Ativo      |
+| teamviewer           | Ferramenta de acesso remoto               | Ativo      |
+| visual-studio-code   | Editor de código da Microsoft             | Desabilitado |
+| whatsapp             | Cliente de WhatsApp para desktop          | Ativo      |
+| zoom                 | Plataforma de videoconferência            | Ativo      |
+
+# Flatpak Packages (Opcional)
+
+| Pacote             | Descrição                          |
+|--------------------|------------------------------------|
+| atom               | Editor de texto open source       |
+| dbeaver            | Cliente de banco de dados         |
+| franz              | Cliente de mensagens unificadas   |
+| postman            | Testes de API                     |
+| spotify            | Cliente de música                 |
+| visual studio code | Editor de código                  |
+| zoom               | Cliente de videoconferência       |
+
+# Environment Setup
+
+| Ferramenta | Descrição                                                   | Status     |
+|------------|-------------------------------------------------------------|------------|
+| asdf       | Gerenciador de versões para linguagens                      | Ativo      |
+| docker     | Plataforma para containers                                  | Ativo      |
+| elixir     | Linguagem funcional baseada em Erlang                       | Desabilitado |
+| erlang     | Plataforma para aplicações distribuídas                     | Desabilitado |
+| fish       | Shell moderno e interativo                                  | Ativo      |
+| git        | Sistema de controle de versão                               | Ativo      |
+| neovim     | Editor de texto baseado em Vim                              | Desabilitado |
+| postgres   | Banco de dados relacional                                   | Desabilitado |
+| ruby       | Linguagem de programação dinâmica                           | Ativo      |
+| swappiness | Ajuste do uso de swap no sistema                           | Ativo      |
+| teamviewer | Acesso remoto a dispositivos                                | Desabilitado |
+| tmux       | Multiplexador de terminal                                   | Ativo      |
+| zsh        | Shell poderoso e customizável                               | Desabilitado |

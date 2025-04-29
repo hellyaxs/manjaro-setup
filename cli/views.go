@@ -13,6 +13,7 @@ import (
 func (m model) View() string {
 	var s string
 	if m.Quitting {
+		// ExecScripts(locationScripts[m.Choice]) // exec scripts
 		return "\n  Instalação concluida até a proxima!\n\n"
 	}
 	if !m.Chosen {
@@ -31,22 +32,22 @@ func choicesView(m model) string {
     tpl := "Qual setup você deseja ?\n\n"
     tpl += "%s\n\n"
     tpl += ""
-    tpl += subtleStyle.Render("UpArrow/DownArrow, up/down: select") + dotStyle +
-        subtleStyle.Render("space: select/deselect") + dotStyle +
+    tpl += subtleStyle.Render("up/down: nav") + dotStyle +
+        subtleStyle.Render("space: select/uneselect") + dotStyle +
         subtleStyle.Render("enter: confirm") + dotStyle +
+		subtleStyle.Render("tab: next") + dotStyle +
+		subtleStyle.Render("Shift+tab: back") + dotStyle +
         subtleStyle.Render("q, esc: quit")
 
     var choicesBuilder strings.Builder
 
-    for i, option := range m.options {
-        choicesBuilder.WriteString(checkbox(option,  slices.Contains(m.SelectedChoices, i) ,slices.Contains(m.SelectedChoices, i) || c == i))
+    for i, option := range m.viewState[m.indexState].options {
+        choicesBuilder.WriteString(checkbox(option,  slices.Contains(m.viewState[m.indexState].SelectedChoices, i),slices.Contains(m.viewState[m.indexState].SelectedChoices, i) || c == i))
         if i < len(options)-1 {
             choicesBuilder.WriteString("\n")
         }
     }
-
     choices := choicesBuilder.String()
-
     return fmt.Sprintf(tpl, choices)
 }
 

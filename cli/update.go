@@ -1,10 +1,10 @@
 package cli
 
 import (
+	"slices"
 	"time"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/fogleman/ease"
-	"slices"
 )
 
 func tick() tea.Cmd {
@@ -33,16 +33,23 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if !m.Chosen {
 		return updateChoices(msg, m)
 	}else{
-		switch m.Choice {
-		    case 0:
-				m.options = options
+		nextView := viewState{
+			options: options,
+			SelectedChoices: []int{},
 		}
+		switch m.Choice {
+		    case 0: // instalação padrão (manjaro install apps)
+				m.viewState = append(m.viewState, nextView)
+			case 1: // instalação cli (manjaro install cli)
+				m.viewState = append(m.viewState, nextView)
+			case 2: // instalação web/dev (manjaro install web)
+				m.viewState = append(m.viewState, nextView)	
+		}
+		m.indexState++
 		return updateChosen(msg, m)
 	}
 }
 
-
-// Sub-update functions
 
 // Update loop for the first view where you're choosing a task.
 func updateChoices(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
@@ -51,20 +58,30 @@ func updateChoices(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "j", "down":
 			m.Choice++
-			if m.Choice > len(m.options)-1 {
+			if m.Choice > len(m.viewState[m.indexState].options)-1 {
 				m.Choice = 0
 			}
 		case "k", "up":
 			m.Choice--
 			if m.Choice < 0 {
-				m.Choice = len(m.options)-1
+				m.Choice = len(m.viewState[m.indexState].options)-1
 			}
 		case " ":
-			if slices.Contains(m.SelectedChoices, m.Choice) {
-				m.SelectedChoices = removeElement(m.SelectedChoices,m.Choice)
+			if slices.Contains(m.viewState[m.indexState].SelectedChoices, m.Choice) {
+				m.viewState[m.indexState].SelectedChoices = removeElement(m.viewState[m.indexState].SelectedChoices,m.Choice)
 			} else {
-				m.SelectedChoices = append(m.SelectedChoices, m.Choice)
+				m.viewState[m.indexState].SelectedChoices = append(m.viewState[m.indexState].SelectedChoices, m.Choice)
 			}
+		case "tab":
+			if(m.indexState < len(m.viewState)){
+				m.indexState++
+				return m, frame()
+			}
+		case "shift+tab":
+			if(m.indexState > 0){
+				m.indexState--
+				return m, frame()
+			}	
 		case "enter":
 			m.Chosen = true
 			return m, frame()

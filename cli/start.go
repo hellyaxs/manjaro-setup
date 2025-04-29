@@ -29,38 +29,34 @@ var (
 	}
     optionsInit = []string{
 		"1. instalação padrão (manjaro install apps)",
-		"2. instalação cli (manjaro install cli)",
-		"3. instalação web/dev (manjaro install web)",
-		"4. instalação servidor (no working)",
-
-})
+		"2. instalação cli (ferrmentas cli uteis produtivas)",
+		"3. instalação web/dev (ferramentas para desenvolmento web)",
+		"4. Otimizações do sistema (no working)",
+	}
+)
 
 func StartViews() {
-    initialModel := model{ Choice: 0, 
+	// Estado inicial com a primeira tela
+	initialViewState := viewState{
+		options: optionsInit,
 		SelectedChoices: []int{},
+	}
+
+	// Modelo inicial com histórico de telas
+	initialModel := model{ 
+		Choice: 0,
+		indexState: 0, 
 		Ticks: 10, 
 		Frames: 0, 
 		Progress: 0, 
 		Loaded: false, 
 		Quitting: false,
-		options:optionsInit,
-		}
-    p := tea.NewProgram(initialModel)
-    if _, err := p.Run(); err != nil {
-        fmt.Println("could not start program:", err)
-    }
-	
-	// initialModel2 := model{ Choice: 0, 
-	// 	SelectedChoices: make(map[int]bool),
-	// 	Ticks: 10, 
-	// 	Frames: 0, 
-	// 	Progress: 0, 
-	// 	Loaded: false, 
-	// 	Quitting: false,
-	// 	options:options,
-	// 	}
-    // q := tea.NewProgram(initialModel2)
-    // if _, err := q.Run(); err != nil {
-    //     fmt.Println("could not start program:", err)
-    // }
+		viewState: []viewState{initialViewState},
+	}
+
+	// Inicia o programa TUI
+	p := tea.NewProgram(initialModel)
+	if _, err := p.Run(); err != nil {
+		fmt.Println("could not start program:", err)
+	}
 }

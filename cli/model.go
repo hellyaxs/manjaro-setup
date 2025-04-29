@@ -2,10 +2,9 @@ package cli
 
 import (
 	"setup/cli/utils"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	
+	// "fmt"
 )
 
 const (
@@ -39,15 +38,16 @@ type (
 )
 
 type model struct {
+    indexState      int
     Choice          int
-    SelectedChoices []int
 	Chosen          bool
     Ticks           int
     Frames          int
     Progress        float64
     Loaded          bool
     Quitting        bool
-	options	        []string
+    viewState       []viewState
+    currentView     int
 }
 
 func (m model) Init() tea.Cmd {
@@ -55,7 +55,92 @@ func (m model) Init() tea.Cmd {
 }
 
 type viewState struct {
-    choices []string
+    SelectedChoices []int
     options []string
+    title string
+}
+
+// func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+//     switch msg := msg.(type) {
+//     case tea.KeyMsg:
+//         switch msg.String() {
+//         case "ctrl+c", "q":
+//             m.Quitting = true
+//             return m, tea.Quit
+//         case "up", "k":
+//             if m.Choice > 0 {
+//                 m.Choice--
+//             }
+//         case "down", "j":
+//             if m.Choice < len(m.viewState[m.currentView].options)-1 {
+//                 m.Choice++
+//             }
+//         case "enter", " ":
+//             m.Chosen = true
+//             // Adiciona nova tela baseada na escolha
+//             if m.currentView == 0 {
+//                 newView := viewState{
+//                     options: options,
+//                     SelectedChoices: []int{},
+//                     title: "Selecione os pacotes para instalar",
+//                 }
+//                 m.viewState = append(m.viewState, newView)
+//                 m.currentView++
+//                 m.Choice = 0
+//             }
+//         case "esc":
+//             // Volta para a tela anterior
+//             if m.currentView > 0 {
+//                 m.currentView--
+//                 m.Choice = 0
+//             }
+//         }
+//     case tickMsg:
+//         m.Ticks++
+//         return m, tick()
+//     case frameMsg:
+//         m.Frames++
+//         return m, frame()
+//     }
+//     return m, nil
+// }
+
+// func (m model) View() string {
+//     if m.Quitting {
+//         return "Até logo!\n"
+//     }
+
+//     s := ""
+//     if m.currentView == 0 {
+//         s += "Selecione o tipo de instalação:\n\n"
+//     } else {
+//         s += m.viewState[m.currentView].title + "\n\n"
+//     }
+
+//     for i, choice := range m.viewState[m.currentView].options {
+//         cursor := " "
+//         if m.Choice == i {
+//             cursor = ">"
+//         }
+
+//         checked := " "
+//         if contains(m.viewState[m.currentView].SelectedChoices, i) {
+//             checked = "x"
+//         }
+
+//         s += fmt.Sprintf("%s [%s] %s\n", cursor, checked, choice)
+//     }
+
+//     s += "\nPressione q para sair, esc para voltar\n"
+//     return s
+// }
+
+func contains(s []int, e int) bool {
+    for _, a := range s {
+        if a == e {
+            return true
+        }
+    }
+    return false
 }
 
