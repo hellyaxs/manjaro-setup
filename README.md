@@ -32,7 +32,7 @@
 </p>
 
 <p align="left">
-    Dê uma olhada em `manjaro_install_apps.sh` , `manjaro_install_cli.sh` e `manjaro_install_web_dev.sh`. Antes de executar qualquer um deles, recomendo que você os abra em um editor de texto e revise o que será instalado, comente/descomente dependendo de suas necessidades, então `chmod +x *.sh` e execute.
+    Dê uma olhada em <code>manjaro_install_apps.sh</code> , <code>manjaro_install_cli.sh</code> e <code>manjaro_install_web_dev.sh</code>. Antes de executar qualquer um deles, recomendo que você os abra em um editor de texto e revise o que será instalado, comente/descomente dependendo de suas necessidades, então <code>chmod +x *.sh</code> e execute.
 </p>
 
 ###  🔧 Gerar o binário
